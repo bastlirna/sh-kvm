@@ -13,15 +13,15 @@ Tested on Windows 7 32bit, Java 6 have to be supplied separately (SE 1.6.0_45 wo
 
 Java installer is done in 3 levels of packing. 
 
-1) Get installer and (e.g. `jre-6uXX-windows-i586.exe`) and unpack it
+1) Get installer (e.g. `jre-6uXX-windows-i586.exe`) and unpack it
 2) There is `core.zip`, unpack it into `java6` folder
-3) Main JAR file are pack in pack200 format (see [stackoverflow](https://stackoverflow.com/a/14480193)), so run:
+3) Main JAR files are packed in the [Pack200](https://en.wikipedia.org/wiki/Pack200) format (see [stackoverflow](https://stackoverflow.com/a/14480193)), so run:
 
 ```
 for /r %f in (*.pack) do "%JAVA_HOME%\bin\unpack200.exe" -r -q "%f" "%~pf%~nf.jar"
 ```
 
-> Without last step, you will probably end up with this error message:
+> Without the last step, you will probably end up with this error message:
 > 
 > ```
 > Error occurred during initialization of VM
