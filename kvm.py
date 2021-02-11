@@ -9,7 +9,7 @@ java_path = ".\\java6"
 
 parser = argparse.ArgumentParser(description = "APC KVM launcher")
 parser.add_argument("jnlp", metavar="JNLP_FILE", type=argparse.FileType('r'),
-        help="The JNLP file downloaded from the KVM to start a session (.JNLP)")
+                    help="The JNLP file downloaded from the KVM to start a session (.JNLP)")
 args = parser.parse_args()
 
 jnlp_xml = args.jnlp.read().strip()
@@ -19,21 +19,21 @@ codebase = DOMTree.getElementsByTagName("jnlp")[0].attributes["codebase"].value 
 
 jars = []
 for resource in DOMTree.getElementsByTagName("resources"):
-    nodes = resource.getElementsByTagName("jar")
-    nodes += resource.getElementsByTagName("nativelib")
-    for jar in nodes:
-        file = jar.attributes["href"].value
-        jars.append(file)
-        if os.path.isfile(file):
-            continue
-        print("Downloading " + file)
-        urllib.request.urlretrieve(codebase + file, file)
+  nodes = resource.getElementsByTagName("jar")
+  nodes += resource.getElementsByTagName("nativelib")
+  for jar in nodes:
+    file = jar.attributes["href"].value
+    jars.append(file)
+    if os.path.isfile(file):
+      continue
+    print("Downloading " + file)
+    urllib.request.urlretrieve(codebase + file, file)
 
 app = DOMTree.getElementsByTagName("application-desc")[0]
 main = app.attributes["main-class"].value
 args = []
 for arg in app.getElementsByTagName("argument"):
-    args.append(arg.firstChild.data)
+  args.append(arg.firstChild.data)
 
 cmd = "\"" + java_path + os.path.sep + "bin\\java\" "
 # cmd = "java "
