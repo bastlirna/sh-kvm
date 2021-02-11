@@ -3,6 +3,7 @@ import xml.dom.minidom
 import os
 import urllib.request
 import subprocess
+import platform
 
 # os.chdir(os.path.realpath(__file__))
 java_path = ".\\java6"
@@ -19,6 +20,9 @@ codebase = DOMTree.getElementsByTagName("jnlp")[0].attributes["codebase"].value 
 
 jars = []
 for resource in DOMTree.getElementsByTagName("resources"):
+  if ("os" in resource.attributes):
+    if (resource.attributes["os"].value != platform.system()):
+      continue
   nodes = resource.getElementsByTagName("jar")
   nodes += resource.getElementsByTagName("nativelib")
   for jar in nodes:
